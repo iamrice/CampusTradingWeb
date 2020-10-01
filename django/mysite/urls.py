@@ -24,6 +24,7 @@ urlpatterns = [
     #path('', views.index),
     #path('',views.index)
     #re_path(r'^search/(.*)/$',views.search),
-    path('addSample/',views.addTestSample),
+    path('addCommodity/',views.addCommodity),
+    path('addUser/',views.addUser),
     path('queryForCommodity/',views.queryForCommodity)
 ]
