@@ -10,8 +10,8 @@
 2020/09/30 确定选型，初步启动
 
 2020/10/03 首页：筛选功能完成、界面排版完成
-调整了前端代码，目前可读性良好\n
-	-index.js "export Container" 包含首页的所有组件、以及连接后端的ajax请求函数
+调整了前端代码，目前可读性良好  
+	-index.js "export Container" 包含首页的所有组件、以及连接后端的ajax请求函数  
 	-indexPage/searchBlock.js "export searchBlock" 搜索组件，包含搜索框和条件筛选器
 	-indexPage/commodityExhibiton.js "export Exhibiton" 商品展示组件
 
