@@ -17,12 +17,12 @@
   
 近期遇到的问题：  
 	1. ajax跨域请求报错，原因是前后端分离。   
-	解决方法：在django的setting.py中添加CORS设置： 
-	```
-		CORS_ALLOW_CREDENTIALS = True
-		CORS_ORIGIN_WHITELIST = [
-		'http://localhost:3000/'  #前端的ip地址，因为目前是本地调试，所以ip是localhost
-		]
+	解决方法：在django的setting.py中添加CORS设置：   
+	```  
+		CORS_ALLOW_CREDENTIALS = True  
+		CORS_ORIGIN_WHITELIST = [  
+		'http://localhost:3000/'  #前端的ip地址，因为目前是本地调试，所以ip是localhost  
+		]  
 	```  
 	2. 复杂sql请求  
 	解决方法：使用connection.cursor()功能，可以直接用熟悉的sql语句进行请求。  
