@@ -26,3 +26,7 @@
 	```  
 	2. 复杂sql请求  
 	解决方法：使用connection.cursor()功能，可以直接用熟悉的sql语句进行请求。  
+
+
+  
+2020/10/10 将后端的django部署到了服务器上，使用的是uwigs和nginx，好处是调试前端时不用在本地启动django。
