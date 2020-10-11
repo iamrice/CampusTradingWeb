@@ -33,4 +33,4 @@
 
 2020/10/11 个人主页
 
-![1602401550642](C:\Users\wei2\AppData\Roaming\Typora\typora-user-images\1602401550642.png)
+![contents](<https://github.com/iamrice/CampusTradingWeb/blob/master/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5.png>)
