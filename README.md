@@ -31,4 +31,6 @@
 
 2020/10/10 将后端的django部署到了服务器上，使用的是uwigs和nginx，好处是调试前端时不用在本地启动django。
 
-2020/10/11 1
+2020/10/11 个人主页
+
+![1602401550642](C:\Users\wei2\AppData\Roaming\Typora\typora-user-images\1602401550642.png)
