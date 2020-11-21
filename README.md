@@ -41,3 +41,6 @@
 2020/10/11 个人主页
 
 ![contents](<https://github.com/iamrice/CampusTradingWeb/blob/master/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5.png>)
+
+####2020/11/21
+新增上传图片功能，使用的图床是https://pic-bed.xyz
