@@ -13,6 +13,9 @@ import json
 
 #database
 from cmdb.models import user,commodity,image
+from requests_toolbelt.multipart.encoder import MultipartEncoder
+import sys
+import requests
 
 # Create your views here.
 
@@ -55,20 +58,43 @@ def addCommodity(request):
 
 def addUser(request):
     new_user=user(
-        studentID="201830570057"
+        studentID="201830570057",
+        nickname="左",
+        phoneNumber="15816601051",
+        password="freeout",
+        name="陈泰佑",
+        college="华南理工大学",
+        major="计算机科学与技术",
+        dormitory="503"
     )
     new_user.save()
     return  HttpResponse("successfully add a user sample")
+import  re
 
 def addPicture(request):
-    the_commodity=commodity.objects.only('commodityID').get(commodityID="00001")
-    print(the_commodity)
+    # 使用GET请求，示例：http://127.0.0.1:8000/addPicture?imgUrl=C://test.jpg&commodityID=00001
+    cID=request.GET.get('commodityID')
+    imgUrl= request.GET.get('imgUrl')
+    the_commodity=commodity.objects.only('commodityID').get(commodityID=cID)
+    url = 'https://pic-bed.xyz/api/upload'
+    flag = False
+    part = MultipartEncoder(fields={
+        'userId': '20',
+        'file': ('xxx.png', open(imgUrl, 'rb'), 'application/octet-stream')
+    })
+    head = {'token': '00e27717090e4762a022782f61ec1307',
+            'content-type': part.content_type}
+    response = requests.post(url, data=part, headers=head)
+    if response.status_code != 200:
+        return HttpResponse("fail to upload images")
+
+    res=re.findall(r'http[^ ]*',response.text)[0]
     new_image=image(
         commodity=the_commodity,
-        image_url="commodity_pictures/default.png"
+        image_url=res
     )
     new_image.save()
-    return HttpResponse("successfully add a image sample")
+    return HttpResponse("successfully add a image at "+res)
 
 def queryForCommodity(request):
     data=json.loads(request.POST.get('condition',0))

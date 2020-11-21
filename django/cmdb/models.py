@@ -27,5 +27,3 @@ class commodity(models.Model):
 class image(models.Model):
     image_url=models.ImageField(upload_to='commodity_pictures',default='commodity_pictures/default.png')
     commodity=models.ForeignKey(to=commodity,on_delete=models.SET_NULL,null=True)
-
-
