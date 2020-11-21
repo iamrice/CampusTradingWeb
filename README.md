@@ -1,6 +1,6 @@
 # CampusTradingWeb 校园二手交易网站
 
-## 技术方案：django + react + ant
+### 技术方案：django + react + ant
 
 ### 项目部署：http://81.71.26.99/
 
