@@ -16,10 +16,10 @@
 
 ### 项目进度  
 
-#### 2020/09/30  
+### 2020/09/30  
 确定选型，初步启动
 
-#### 2020/10/03 
+### 2020/10/03 
 首页：筛选功能完成、界面排版完成  调整了前端代码，目前可读性良好  
 > index.js "export Container" 包含首页的所有组件、以及连接后端的ajax请求函数  
 > indexPage/searchBlock.js "export searchBlock" 搜索组件，包含搜索框和条件筛选器  
@@ -39,12 +39,12 @@
 
 
 
-#### 2020/10/10 
+### 2020/10/10 
 将后端的django部署到了服务器上，使用的是uwigs和nginx，好处是调试前端时不用在本地启动django。
 
-#### 2020/10/11 
+### 2020/10/11 
 个人主页
 ![contents](<https://github.com/iamrice/CampusTradingWeb/blob/master/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5.png>)
 
-#### 2020/11/21
+### 2020/11/21
 新增上传图片功能，使用的图床是https://pic-bed.xyz
