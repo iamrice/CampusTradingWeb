@@ -26,7 +26,8 @@ urlpatterns = [
     #re_path(r'^search/(.*)/$',views.search),
     path('addCommodity/',views.addCommodity),
     path('addUser/',views.addUser),
-    path('queryForCommodity/',views.queryForCommodity),
+    path('queryForCommodity_search/',views.queryForCommodity_search),
+    path('queryForCommodity_select/',views.queryForCommodity_select),
     path('queryAllCommoditys/',views.queryAllCommoditys),
     path('addPicture/',views.addPicture)
 ]

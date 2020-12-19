@@ -149,6 +149,7 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = [
 	'http://localhost:3000/',
 	'http://127.0.0.1:3000/',
+    'http://81.71.26.99/',
 ]
 
 USE_L10N = False

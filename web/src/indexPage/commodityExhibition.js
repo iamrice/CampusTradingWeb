@@ -23,7 +23,7 @@ import {
 } from '@ant-design/icons';
 
 function CommodityCard(props) {
-	console.log("props", props)
+	//console.log("props", props)
 	return <div style={{display:'flow-root',paddingLeft:40,paddingRight:40,paddingTop:20,paddingBottom:10,borderBottom:'solid 1px #d7d8dc'}}>
 			<div style={{float:'left'}}>
 				<h3 style={{fontWeight:'bold'}}>{props.info.commodityName}</h3>
@@ -69,7 +69,7 @@ class Exhibiton extends React.Component {
 	render() {
 		var data = this.props.parent.state.dataOnShow
 		let cards = data.map((item) =>
-			<CommodityCard info={item} that={this}/>
+			<CommodityCard info={item} key={item.latestModified} that={this}/>
 		);
 		return (
 			<div style={{backgroundColor:'white',margin:10}}>

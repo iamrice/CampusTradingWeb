@@ -44,10 +44,10 @@ def addCommodity(request):
     # )
     the_user=user.objects.only('studentID').get(studentID="201830570057")
     new_com=commodity(
-        commodityID="00003",
+        commodityID="00004",
         transactionType="售卖",
         objectType="教育文娱",
-        commodityName="操作系统原书第四版",
+        commodityName="计算机网络原书第四版",
         oldLevel="全新",
         price=20,
         recommend="本书适合全员班的同学使用，书中有笔记和重点标注。",
@@ -96,7 +96,7 @@ def addPicture(request):
     new_image.save()
     return HttpResponse("successfully add a image at "+res)
 
-def queryForCommodity(request):
+def queryForCommodity_select(request):
     data=json.loads(request.POST.get('condition',0))
     print(data)
     #商品类型
@@ -130,6 +130,19 @@ def queryForCommodity(request):
     res = [row[0] for row in res]
     print(res)
     return HttpResponse(json.dumps(res))
+
+def queryForCommodity_search(request):
+    context=request.POST.get('context',0)
+    print(context)
+    #商品类型
+    queryStr='select commodityID from cmdb_commodity where commodityName LIKE \'%'+context+'%\'  or recommend LIKE \'%'+context+'%\';'
+    print(queryStr)
+    cursor=connection.cursor()
+    cursor.execute(queryStr)
+    res=cursor.fetchall()
+    res = [row[0] for row in res]
+    print(res)
+    return HttpResponse(json.dumps(res))    
 
 def queryAllCommoditys(request):
     # 不仅要获取商品信息，还要获取发布者的头像、昵称、商品的图片信息
