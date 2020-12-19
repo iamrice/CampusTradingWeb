@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from cmdb.models import user,commodity,image
 from django.core import serializers
 from django.db.models import Q
 from django.http import JsonResponse
@@ -10,9 +11,10 @@ from datetime import datetime
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
 import json
+import datetime
 
 #database
-from cmdb.models import user,commodity,image
+
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 import sys
 import requests
@@ -42,33 +44,35 @@ def addCommodity(request):
     #     recommend=request.GET.get("recommend"),
     #     user="201830570057"
     # )
-    the_user=user.objects.only('studentID').get(studentID="201830570057")
+    context=json.loads(request.POST.get('context'))
     new_com=commodity(
-        commodityID="00004",
-        transactionType="售卖",
-        objectType="教育文娱",
-        commodityName="计算机网络原书第四版",
-        oldLevel="全新",
-        price=20,
-        recommend="本书适合全员班的同学使用，书中有笔记和重点标注。",
-        user=the_user
+        transactionType=context['1'],
+        objectType=context['0'],
+        commodityName=context['3'],
+        oldLevel=context['2'],
+        price=context['4'],
+        recommend=context['5'],
+        user=user.objects.filter(studentID=1).first(),
+        releaseTime=datetime.date.today()
+        latestModified=datetime.date.today()
     )
     new_com.save()
     return HttpResponse("successfully add a commodity sample")
 
 def addUser(request):
-    new_user=user(
-        studentID="201830570057",
-        nickname="左",
-        phoneNumber="15816601051",
-        password="freeout",
-        name="陈泰佑",
-        college="华南理工大学",
-        major="计算机科学与技术",
-        dormitory="503"
+    context=json.loads(request.POST.get('context'))
+    new_user=commodity(
+        
+        nickname=context['1'],
+        phoneNumber=context['1'],
+        password=context['1'],
+        name=context['1'],
+        college=context['1'],
+        major=context['1'],
+        dormitory=context['1']
     )
     new_user.save()
-    return  HttpResponse("successfully add a user sample")
+    return HttpResponse("successfully add a user sample")
 import  re
 
 def addPicture(request):
@@ -107,7 +111,7 @@ def queryForCommodity_select(request):
         localStr=''
         count=0
         if(data[con]['全部']==True):
-            continue;
+            continue
         for item in data[con]:
             if data[con][item]==True:
                 if count>0:

@@ -2,7 +2,7 @@ from django.db import models
 import django.utils.timezone as timezone
 
 class user(models.Model):
-    studentID=models.CharField(primary_key=True,max_length=12,default='')
+    studentID=models.AutoField(primary_key=True,max_length=12)
     nickname=models.CharField(max_length=10,default='')
     avatar=models.ImageField(upload_to='avatars',default='avatars/default.png')
     phoneNumber=models.CharField(max_length=12,default='')
@@ -13,7 +13,7 @@ class user(models.Model):
     dormitory=models.CharField(max_length=20,default='')
 
 class commodity(models.Model):
-    commodityID = models.CharField(primary_key=True, max_length=20,default='')
+    commodityID = models.AutoField(primary_key=True, max_length=20)
     transactionType = models.CharField(max_length=10,default='')
     commodityName=models.CharField(max_length=30,default='')
     objectType=models.CharField(max_length=10,default='')
