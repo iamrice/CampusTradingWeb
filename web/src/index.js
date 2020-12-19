@@ -8,7 +8,8 @@ import * as serviceWorker from './serviceWorker';
 import {
     BrowserRouter as Router,
     Route,
-    Link
+    Link,
+    Redirect
 } from 'react-router-dom';
 import {
     Layout,
@@ -161,8 +162,9 @@ class ContainBox extends React.Component {
 ReactDOM.render(
     <Router>
         <Route path="/">
-            <Route path="/index" component={ContainBox}/>
+            <Route path="/index" exact component={ContainBox}/>
             <Route path="/search" component={SearchBlock}/>
+            <Redirect path="/" to={{pathname:'/index'}} />
         </Route>
     </Router>,
     document.getElementById('container')
