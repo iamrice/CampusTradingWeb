@@ -2,7 +2,7 @@
 
 ### 技术方案：django + react + ant
 
-### 项目部署：http://81.71.26.99/
+### 项目部署：http://81.71.26.99/ (已失效)
 
 ### 预期功能：
 
@@ -44,7 +44,9 @@
 
 ### 2020/10/11 
 个人主页
-![contents](<https://github.com/iamrice/CampusTradingWeb/blob/master/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5.png>)
 
 ### 2020/11/21
 新增上传图片功能，使用的图床是https://pic-bed.xyz
+
+###2020/12/19
+完成了首页商品搜索功能，支持模糊搜索，支持关键词和筛选器两层筛选。
