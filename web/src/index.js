@@ -46,6 +46,7 @@ class ContainBox extends React.Component {
         }
         this.requestData();
         this.allData = [];
+
     }
     render() {
         console.log(this.state.windowWidth)
@@ -164,7 +165,7 @@ ReactDOM.render(
             <Route path="/index" exact component={ContainBox}/>
             <Route path="/create" component={Create}/>
             <Route path="/details" component={CommodityDetails}/>       
-            <Redirect path="/" to={{pathname:'/create'}} />
+            <Redirect path="/" to={{pathname:'/index'}} />
         </Route>
     </Router>,
     document.getElementById('container')

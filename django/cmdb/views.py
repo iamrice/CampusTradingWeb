@@ -7,11 +7,12 @@ from django.views.decorators.csrf import csrf_exempt
 import re
 from django.db import connection
 from datetime import datetime
-
+from captcha.fields import CaptchaField
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
 import json
-
+from django import forms
+from django.shortcuts import render, HttpResponse, redirect, reverse
 #database
 
 from requests_toolbelt.multipart.encoder import MultipartEncoder
@@ -51,7 +52,7 @@ def addCommodity(request):
         oldLevel=context['2'],
         price=context['4'],
         recommend=context['5'],
-        user=user.objects.filter(studentID=1).first(),
+        user=user.objects.filter(studentID=request.session['user']).first(),
     )
     new_com.save()
     return HttpResponse("successfully add a commodity sample")
@@ -191,3 +192,107 @@ def queryAllCommoditys(request):
                 commodity['images'].append(img['fields']['image_url'])
     return HttpResponse(json.dumps(res).encode('raw_unicode_escape').decode('raw_unicode_escape'))
 
+def index(request):
+    if not request.session.get('is_login', None):
+        return redirect(reverse('login'))
+    current = request.session['user']
+    return render(request, 'index.html', locals())
+
+
+def login(request):
+    if request.session.get('is_login', None):
+        return redirect(reverse('index'))
+
+    if request.method == "POST":
+        uf = UserFormLogin(request.POST)
+        if uf.is_valid():
+            # 获取表单信息
+            username = uf.cleaned_data['username']
+            password = uf.cleaned_data['password']
+            #print(password)
+            userResult = user.objects.filter(studentID=username, password=password)
+
+            if len(userResult) > 0:
+                request.session['is_login'] = True
+                request.session['user'] = userResult[0].studentID
+                return redirect(reverse('index'))
+            else:
+                message = '用户名或密码错误'
+                return render(request, "login.html", locals())
+        else:
+            message = '请注意提交内容'
+            return render(request, "login.html", locals())
+
+    uf = UserFormLogin()
+    return render(request, "login.html", locals())
+
+
+def register(request):
+    if request.session.get('is_login', None):
+        return redirect(reverse('index'))
+    if request.method == "POST":
+        uf = UserForm(request.POST)
+        if uf.is_valid():
+            # 获取表单信息
+            username = uf.cleaned_data['username']
+            filterResult = user.objects.filter(studentID=username)
+            if len(filterResult) > 0:
+                message = 'student ID 已存在'
+                return render(request, 'register.html', locals())
+            else:
+                password1 = uf.cleaned_data['password1']
+                password2 = uf.cleaned_data['password2']
+
+                if password2 != password1:
+                    message = '两次输入的密码不同'
+                    return render(request, 'register.html', locals())
+                # 将表单写入数据库
+                newUser = user.objects.create(studentID=username,
+                                              password=password1,
+
+                                              phoneNumber=uf.cleaned_data['phoneNumber'],
+                                              nickname=uf.cleaned_data['nickname'],
+                                              name=uf.cleaned_data['name'],
+                                              college=uf.cleaned_data['college'],
+                                              major=uf.cleaned_data['major'],
+                                              dormitory=uf.cleaned_data['dormitory'],
+                                              )
+                newUser.save()
+                # 注册成进入主页
+                request.session['is_login'] = True
+                request.session['user'] = username
+                return redirect(reverse('index'))
+
+        else:
+            message = '请注意填写'
+
+            return render(request, 'register.html', locals())
+
+    uf = UserForm()
+    return render(request, 'register.html', locals())
+
+
+def logout(request):
+    if not request.session.get('is_login', None):
+        return redirect(reverse('login'))
+    request.session.flush()
+    return redirect(reverse('login'))
+
+
+class UserForm(forms.Form):
+    username = forms.CharField(label='Student ID', max_length=100)
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput())
+    password2 = forms.CharField(label='Con-Password', widget=forms.PasswordInput())
+    nickname = forms.CharField(label='Nickname', max_length=100)
+    #avatar = forms.ImageField(label='avatar', max_length=100)
+    phoneNumber = forms.CharField(label='Phone', max_length=100)
+    name = forms.CharField(label='True Name', max_length=100)
+    college = forms.CharField(label='College', max_length=100)
+    major = forms.CharField(label='Major', max_length=100)
+    dormitory = forms.CharField(label='Dormitory', max_length=100)
+    captcha = CaptchaField(label='验证码')
+
+
+class UserFormLogin(forms.Form):
+    username = forms.CharField(label='username', max_length=100)
+    password = forms.CharField(label='password', widget=forms.PasswordInput())

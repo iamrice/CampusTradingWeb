@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>{% load static %}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>用户注册</title>
+
+<link href="/static/css/style.css" rel="stylesheet" type="text/css" media="all" />
+ <script src="/static/js/sweetalert.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(c) {
+	$('.alert-close').on('click', function(c){
+		$('.message').fadeOut('slow', function(c){
+	  		$('.message').remove();
+		});
+	});
+});
+</script>
+
+</head>
+<body>
+
+<div class="message warning">
+	<div class="inset">
+		<div class="login-head">
+			<h1>用户注册</h1>
+
+		</div>
+                    {% if message or uf.captcha.errors %}
+                        {% if uf.captcha.errors %}
+                        <script type="text/javascript">
+                        swal("Error", "验证码错误", "error")
+                        </script>
+
+                        {% else %}
+                        <script type="text/javascript">
+                        swal("Error", "{{ message }}", "error")
+                        </script>
+                        {% endif %}
+                    {% endif %}
+		<form action="/register/" method="post">
+                  {% csrf_token %}
+			<ul>
+                {{ uf.as_ul}}
+
+			</ul>
+
+			<div class="submit">
+				<input type="submit" value="注册" >
+				<div class="clear">  </div>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+
+<div style="text-align:center;">
+
+</div>
+</body>
+</html>

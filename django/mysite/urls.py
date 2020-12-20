@@ -28,5 +28,11 @@ urlpatterns = [
     path('queryForCommodity_search/',views.queryForCommodity_search),
     path('queryForCommodity_select/',views.queryForCommodity_select),
     path('queryAllCommoditys/',views.queryAllCommoditys),
-    path('addPicture/',views.addPicture)
+    path('addPicture/',views.addPicture),
+
+    path('captcha/', include('captcha.urls')),
+    path('', views.index, name='index'),
+    path('login/', views.login, name='login'),
+    path('register/', views.register, name='register'),
+    path('logout/', views.logout, name='logout'),
 ]

@@ -2,9 +2,9 @@ from django.db import models
 import django.utils.timezone as timezone
 
 class user(models.Model):
-    studentID=models.AutoField(primary_key=True)
+    studentID=models.CharField(primary_key=True,max_length=12,default='')
     nickname=models.CharField(max_length=10,default='')
-    avatar=models.ImageField(upload_to='avatars',default='avatars/default.png')
+    avatar=models.ImageField(upload_to='avatars', blank=True, null=True)
     phoneNumber=models.CharField(max_length=12,default='')
     password=models.CharField(max_length=20,default='')
     name=models.CharField(max_length=10,default='')

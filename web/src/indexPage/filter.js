@@ -18,12 +18,7 @@ function ItemButton(props) {
 class Filter extends React.Component {
 	constructor(props) {
 		super(props);
-		this.props.history.push({
-            pathname: "/search",
-            state: {
-                id: 1
-            }
-        })
+		
 		this.state = {
 			sizerItemChosen: {}
 		};
