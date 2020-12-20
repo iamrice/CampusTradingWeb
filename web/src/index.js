@@ -5,6 +5,7 @@ import './index.css';
 import SearchBlock from './indexPage/searchBlock';
 import Exhibiton from './indexPage/commodityExhibition';
 import Create from './indexPage/create';
+import CommodityDetails from './indexPage/commodityDetails';
 import * as serviceWorker from './serviceWorker';
 import {
     BrowserRouter as Router,
@@ -15,6 +16,7 @@ import {
 import {
     Layout,
 } from 'antd';
+
 
 const {
     Header,
@@ -42,12 +44,7 @@ class ContainBox extends React.Component {
         }
         this.requestData();
         this.allData = [];
-        this.props.history.push({
-            pathname: "/create",
-            state: {
-                id: 1
-            }
-        })
+        
     }
     render() {
         console.log(this.state.windowWidth)
@@ -158,25 +155,7 @@ class ContainBox extends React.Component {
             }
         })
     }
-    createCom(data) {
-        var that = this
-        var postData = new FormData();
-        postData.append('context', data)
-        $.ajax({
-            url: that.url.local + "addCommodity/",
-            dataType: "json",
-            type: "POST",
-            async: false, //同步上传
-            cache: false, //上传文件无需缓存
-            processData: false, // 不处理数据
-            contentType: false, // 不设置内容类型
-            data: postData,
-            success: function(res) {
-                
-                that.successCreate();
-            }
-        })
-    }
+    
 };
  
 ReactDOM.render(
@@ -185,7 +164,8 @@ ReactDOM.render(
             <Route path="/index" exact component={ContainBox}/>
             <Route path="/search" component={SearchBlock}/>
             <Route path="/create" component={Create}/>
-            <Redirect path="/" to={{pathname:'/create'}} />
+            <Route path="/details" component={CommodityDetails}/>
+            <Redirect path="/" to={{pathname:'/details'}} />
         </Route>
     </Router>,
     document.getElementById('container')

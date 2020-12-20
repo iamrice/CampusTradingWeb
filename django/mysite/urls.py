@@ -21,7 +21,6 @@ from django.conf.urls import url
 from cmdb import views
 
 urlpatterns = [
-    #path('', views.index),
     #path('',views.index)
     #re_path(r'^search/(.*)/$',views.search),
     path('addCommodity/',views.addCommodity),

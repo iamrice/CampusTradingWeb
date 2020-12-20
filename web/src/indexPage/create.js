@@ -14,7 +14,8 @@ const { Option } = Select;
 
 class Create extends React.Component{
   constructor(props) {
-		super(props);
+    super(props);
+    
 		this.state = {
       Item: {},
       
@@ -45,7 +46,6 @@ class Create extends React.Component{
     console.log(this.state.Item[3]);//商品名字
     console.log(this.state.Item[4]);//商品价格
     console.log(this.state.Item[5]);//商品描述
-    
     this.createCom(this.state.Item);
   }
   createCom(data) {
@@ -67,8 +67,12 @@ class Create extends React.Component{
           that.successCreate();
         }
     })
-    
     that.successCreate();
+    this.props.history.push({
+      pathname: "/index"
+})  
+    
+    
 }
   successCreate(){
     console.log("success");
@@ -89,7 +93,7 @@ class Create extends React.Component{
   <Header>
         <h3 style={{color:'white'}}>华园二手交易</h3>
       </Header>
-    <Content style={{ padding: '0px 300px' }}>
+    <Content style={{ padding: '20px 200px' }}>
     
           <Image padding='50px' src="https://s3.ax1x.com/2020/12/15/rQMNGR.png"  ></Image>
           

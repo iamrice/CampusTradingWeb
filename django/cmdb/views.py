@@ -11,7 +11,6 @@ from datetime import datetime
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
 import json
-import datetime
 
 #database
 
@@ -53,8 +52,6 @@ def addCommodity(request):
         price=context['4'],
         recommend=context['5'],
         user=user.objects.filter(studentID=1).first(),
-        releaseTime=datetime.date.today()
-        latestModified=datetime.date.today()
     )
     new_com.save()
     return HttpResponse("successfully add a commodity sample")
@@ -63,13 +60,13 @@ def addUser(request):
     context=json.loads(request.POST.get('context'))
     new_user=commodity(
         
-        nickname=context['1'],
+        nickname=context['0'],
         phoneNumber=context['1'],
-        password=context['1'],
-        name=context['1'],
-        college=context['1'],
-        major=context['1'],
-        dormitory=context['1']
+        password=context['2'],
+        name=context['3'],
+        college=context['4'],
+        major=context['5'],
+        dormitory=context['6']
     )
     new_user.save()
     return HttpResponse("successfully add a user sample")
@@ -99,6 +96,29 @@ def addPicture(request):
     )
     new_image.save()
     return HttpResponse("successfully add a image at "+res)
+
+def queryByUser(request):
+    context=json.loads(request.POST.get('context'))
+    
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * from cmdb_commodity nature join cmdb_user;")
+        col_names = [desc[0] for desc in cursor.description]
+        desc=cursor.description
+        temp=cursor.fetchall()
+        res=[dict(zip([col[0] for col in desc], row)) for row in temp]
+
+    temp=image.objects.all()
+    images=serializers.serialize("json", temp)
+    images=json.loads(images)
+    for commodity in res:
+        commodity['latestModified']=commodity['latestModified'].strftime('%Y-%m-%d %H:%M:%S')
+        commodity['releaseTime']=commodity['releaseTime'].strftime('%Y-%m-%d %H:%M:%S')
+        commodity['images']=[]
+        for img in images:
+            if img['fields']['commodity']==commodity['commodityID']:
+                commodity['images'].append(img['fields']['image_url'])
+    return HttpResponse(json.dumps(res).encode('raw_unicode_escape').decode('raw_unicode_escape'))
+
 
 def queryForCommodity_select(request):
     data=json.loads(request.POST.get('condition',0))
