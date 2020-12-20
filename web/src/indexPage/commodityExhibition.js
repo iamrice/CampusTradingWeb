@@ -9,7 +9,9 @@
 发布者信息： 头像、昵称、发布时间
 */
 import React from 'react';
-
+import {
+	Link
+} from 'react-router-dom';
 import {
 	Tag,
 	Image
@@ -23,10 +25,17 @@ import {
 } from '@ant-design/icons';
 
 function CommodityCard(props) {
-	//console.log("props", props)
+	console.log("props", props)
 	return <div style={{display:'flow-root',paddingLeft:40,paddingRight:40,paddingTop:20,paddingBottom:10,borderBottom:'solid 1px #d7d8dc'}}>
 			<div style={{float:'left'}}>
-				<h3 style={{fontWeight:'bold'}}>{props.info.commodityName}</h3>
+				<Link to={
+					{
+						pathname: "/details",
+						state:{'info':props.info}
+					}
+				}>
+					<h3 style={{fontWeight:'bold'}}>{props.info.commodityName}</h3>
+				</Link>
 				<div style={{display:'flex',marginBottom:10,}}>
 					<Tag icon={<CameraOutlined />} color="#55acee" style={{transform:'scale(0.9)'}}>
 				      {props.info.objectType}
@@ -52,9 +61,9 @@ function CommodityCard(props) {
 		    <div style={{float:'right',margin:10}}>
 		    	 <img 
 				      style={{height:150,maxWidth:props.that.state.windowWidth/2}}
-				      src="https://s2.ax1x.com/2019/10/23/Kt2y1s.jpg"
+				      src={props.info.images[0]}
 				    />
-		    </div>		        
+		    </div>
 		</div>
 }
 

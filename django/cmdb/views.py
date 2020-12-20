@@ -74,28 +74,30 @@ import  re
 
 def addPicture(request):
     # 使用GET请求，示例：http://127.0.0.1:8000/addPicture?imgUrl=C://test.jpg&commodityID=00001
-    cID=request.GET.get('commodityID')
-    imgUrl= request.GET.get('imgUrl')
-    the_commodity=commodity.objects.only('commodityID').get(commodityID=cID)
-    url = 'https://pic-bed.xyz/api/upload'
-    flag = False
-    part = MultipartEncoder(fields={
-        'userId': '20',
-        'file': ('xxx.png', open(imgUrl, 'rb'), 'application/octet-stream')
-    })
-    head = {'token': '00e27717090e4762a022782f61ec1307',
-            'content-type': part.content_type}
-    response = requests.post(url, data=part, headers=head)
-    if response.status_code != 200:
-        return HttpResponse("fail to upload images")
+    print(111111111111111111)
+    print(json.loads(request.POST.get('context')))
+    
+    # imgUrl= request.GET.get('imgUrl')
+    # the_commodity=commodity.objects.only('commodityID').get(commodityID=cID)
+    # url = 'https://pic-bed.xyz/api/upload'
+    # flag = False
+    # part = MultipartEncoder(fields={
+    #     'userId': '20',
+    #     'file': ('xxx.png', open(imgUrl, 'rb'), 'application/octet-stream')
+    # })
+    # head = {'token': '00e27717090e4762a022782f61ec1307',
+    #         'content-type': part.content_type}
+    # response = requests.post(url, data=part, headers=head)
+    # if response.status_code != 200:
+    #     return HttpResponse("fail to upload images")
 
-    res=re.findall(r'http[^ ]*',response.text)[0]
-    new_image=image(
-        commodity=the_commodity,
-        image_url=res
-    )
-    new_image.save()
-    return HttpResponse("successfully add a image at "+res)
+    # res=re.findall(r'http[^ ]*',response.text)[0]
+    # new_image=image(
+    #     commodity=the_commodity,
+    #     image_url=res
+    # )
+    # new_image.save()
+    return HttpResponse("successfully add a image at ")
 
 def queryByUser(request):
     context=json.loads(request.POST.get('context'))

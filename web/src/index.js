@@ -5,14 +5,16 @@ import './index.css';
 import SearchBlock from './indexPage/searchBlock';
 import Exhibiton from './indexPage/commodityExhibition';
 import Create from './indexPage/create';
-import CommodityDetails from './indexPage/commodityDetails';
+
+import CommodityDetails from './indexPage/commodityDetails'
+
 import * as serviceWorker from './serviceWorker';
 import {
     BrowserRouter as Router,
     Route,
     Link,
     Redirect
-} from 'react-router-dom'; 
+} from 'react-router-dom';
 import {
     Layout,
 } from 'antd';
@@ -44,7 +46,6 @@ class ContainBox extends React.Component {
         }
         this.requestData();
         this.allData = [];
-        
     }
     render() {
         console.log(this.state.windowWidth)
@@ -155,17 +156,15 @@ class ContainBox extends React.Component {
             }
         })
     }
-    
 };
- 
+
 ReactDOM.render(
     <Router>
         <Route path="/">
             <Route path="/index" exact component={ContainBox}/>
-            <Route path="/search" component={SearchBlock}/>
             <Route path="/create" component={Create}/>
-            <Route path="/details" component={CommodityDetails}/>
-            <Redirect path="/" to={{pathname:'/details'}} />
+            <Route path="/details" component={CommodityDetails}/>       
+            <Redirect path="/" to={{pathname:'/create'}} />
         </Route>
     </Router>,
     document.getElementById('container')

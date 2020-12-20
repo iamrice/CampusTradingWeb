@@ -15,7 +15,7 @@ const { Option } = Select;
 class Create extends React.Component{
   constructor(props) {
     super(props);
-    
+    this.pic=''
 		this.state = {
       Item: {},
       
@@ -33,6 +33,8 @@ class Create extends React.Component{
     this.handleChange = this.selectChange.bind(this);
     this.inputChange = this.inputChange.bind(this);
     this.createCom = this.createCom.bind(this);
+    this.picChange = this.picChange.bind(this);
+    this.getFileURL = this.getFileURL.bind(this);
 
 		//函数
 		// this.sizerClicked = this.sizerClicked.bind(this);
@@ -46,7 +48,29 @@ class Create extends React.Component{
     console.log(this.state.Item[3]);//商品名字
     console.log(this.state.Item[4]);//商品价格
     console.log(this.state.Item[5]);//商品描述
+    
+
     this.createCom(this.state.Item);
+  }
+  picChange(data){
+    this.pic = document.getElementById('fileField1').value
+    var postData = new FormData()
+    console.log(document.getElementById('fileField1').value)
+    var e = {'imgUrl':this.pic, 'commodityID': "1"}
+    postData.append('context', JSON.stringify(e))
+
+    
+  }
+  getFileURL(file) {
+    var getUrl = null;
+    if (window.createObjectURL !== undefined) { // basic
+    getUrl = window.createObjectURL(file);
+    } else if (window.URL !== undefined) { // mozilla(firefox)
+    getUrl = window.URL.createObjectURL(file);
+    } else if (window.webkitURL !== undefined) { // webkit or chrome
+    getUrl = window.webkitURL.createObjectURL(file);
+    }
+    return getUrl;
   }
   createCom(data) {
     var that = this
@@ -67,6 +91,10 @@ class Create extends React.Component{
           that.successCreate();
         }
     })
+    if(this.pic!=''){
+      $.get(this.url.local + "addPicture/", { imgUrl: this.pic, commodityID: "1" } );
+    
+    }
     that.successCreate();
     this.props.history.push({
       pathname: "/index"
@@ -147,18 +175,12 @@ class Create extends React.Component{
         <Row gutter={[0, 12]}> 
         <Col span={8}>上传图片</Col>
         <Col span={8}>
-          <Upload
-            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-            listType="picture"
-            
-          >
-          <Button icon={<UploadOutlined />}>Upload</Button>
-          </Upload>
+        <input type="file"  name="file" id="fileField1" onChange={this.picChange}/>
         </Col>
         </Row>
         <Row gutter={[0, 12]}> 
         <Col span={8}></Col>
-        <Col span={7}><Button type="primary" onClick={this.buttonClicked} >创建商品</Button></Col>
+        <Col span={7}><Button  ref="Dom1" type="primary" onClick={this.buttonClicked} >创建商品</Button></Col>
         </Row>
         
       </div>
